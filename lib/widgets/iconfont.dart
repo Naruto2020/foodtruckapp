@@ -8,7 +8,7 @@ class IconFont extends StatelessWidget {
   double size;
   String iconName;
 
-  IconFont({Key? key, required this.color, required this.size, required this.iconName, }) : super(key: key);
+  IconFont({Key? key, required this.color, required this.size, required this.iconName }) : super(key: key);
 
   @override
 

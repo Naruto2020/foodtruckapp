@@ -73,6 +73,12 @@ flutter:
     - assets/imgs/icons8-marqueur-41.png
     - assets/imgs/icons8-user.png
     - assets/imgs/icons8-truck.png
+    - assets/imgs/truckF1.jpg
+    - assets/imgs/truckF2.jpg
+    - assets/imgs/truckF3.jpg
+    - assets/imgs/truckF4.jpg
+    - assets/imgs/truckF5.jpg
+   
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

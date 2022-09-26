@@ -1,7 +1,10 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:foodtruckapp/pages/categorylistpage.dart';
 import 'package:foodtruckapp/pages/themap.dart';
+import '../widgets/categoryicon.dart';
+import './categorylistpage.dart';
 import '../pages/auth/signin.dart';
 import '../pages/auth/signup.dart';
 //import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -76,7 +79,7 @@ class WelcomePage extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context, 
-                          MaterialPageRoute(builder: (context) => const TheMapPage())
+                          MaterialPageRoute(builder: (context) =>  CategoryListPage())
                         );
                       }, 
                       shape: RoundedRectangleBorder(
