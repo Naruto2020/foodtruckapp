@@ -21,18 +21,18 @@ class CategoryCart extends StatelessWidget {
       },
     child: Container(
       //child: Text(categories[index].name),
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.all(10),
+      // height: 150,
+      //margin: EdgeInsets.symmetric(vertical: 30.0),
       height: 150,
       child: Stack(
         children: [
-          Positioned.fill(
-            child: ClipRRect(                                     
-              borderRadius: BorderRadius.circular(15),
-              child: Image.asset('assets/imgs/${category.imgName}.jpg',
-                fit: BoxFit.cover,
-              ),
-
+          ClipRRect(                                     
+            borderRadius: BorderRadius.circular(15),
+            child: Image.asset('assets/imgs/${category.imgName}.jpg',
+              fit: BoxFit.cover,
             ),
+
           ),
 
           Positioned(
@@ -40,7 +40,7 @@ class CategoryCart extends StatelessWidget {
             left: 0,
             right: 0,
             child: Container(
-              height: 120,
+              height: 60,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(20),
@@ -67,14 +67,14 @@ class CategoryCart extends StatelessWidget {
                   // call category icon to display icon on listes
                   CategoryIcon(
                     color: category.color,
-                    iconName: category.icon, size: 30,
+                    iconName: category.icon, size: 12,
                     
                   ),
                   SizedBox(width: 10),
                   Text(category.name,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 25
+                      fontSize: 13
                     ),
                   )
                 ],

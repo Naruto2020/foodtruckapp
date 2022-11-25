@@ -79,7 +79,7 @@ class WelcomePage extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context, 
-                          MaterialPageRoute(builder: (context) =>  CategoryListPage())
+                          MaterialPageRoute(builder: (context) =>  const TheMapPage())
                         );
                       }, 
                       shape: RoundedRectangleBorder(

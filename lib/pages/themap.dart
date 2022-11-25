@@ -1,22 +1,14 @@
-// ignore_for_file: constant_identifier_names
+//list of markers 
+// ignore_for_file: avoid_unnecessary_containers
 
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-//import 'package:geolocator/geolocator.dart';
-//import 'package:flutter_gmaps/directions_model.dart';
-//import 'package:flutter_gmaps/directions_repository.dart';
+import 'dart:async';
+import '../widgets/trucklists.dart';
+import '../widgets/categorybottombar.dart';
+import '../pages/categorylistpage.dart';
 
-const LatLng Source_Location = LatLng(48.86962697213314, 2.4640869207964764);
-const LatLng Dest_Location = LatLng(48.868266346914446, 2.4633482593284466);
 
-late LatLng currentPostion;
-
-const double CAMERA_ZOOM = 16;
-const double CAMERA_TILT = 80;
-const double CAMERA_BEARING = 30;
-// const double PIN_VISIBLE_POSITION = 20;
-// const double PIN_INVISIBLE_POSITION = -220;
 
 class TheMapPage extends StatefulWidget {
   const TheMapPage({Key? key}) : super(key: key);
@@ -28,12 +20,14 @@ class TheMapPage extends StatefulWidget {
 class _TheMapPageState extends State<TheMapPage> {
 
   Completer<GoogleMapController>_controller = Completer();
+
+  late GoogleMapController mapController; //contrller for Google map
+  final Set<Marker>_markers = Set<Marker>(); //markers for google map
+  static const LatLng showLocation = LatLng(48.86962697213314, 2.4640869207964764);
   late BitmapDescriptor sourceIcon;
   late BitmapDescriptor destinationIcon;
-  Set<Marker>_markers = Set<Marker>();
-
-  late LatLng currentLocation;
-  late LatLng destinationLocation;
+   //location to show in map
+   
 
   // initialisation of # states (locations & markers)
   @override
@@ -41,7 +35,7 @@ class _TheMapPageState extends State<TheMapPage> {
     super.initState();
 
     // set initial locations
-    setInitialLocation();
+    //setInitialLocation();
 
     // set current position
     //_getUserLocation();
@@ -51,9 +45,8 @@ class _TheMapPageState extends State<TheMapPage> {
 
   }
 
-  // set markers icons positions 
-
   void setSourceAndDestinationMarkerIcons() async {
+    
     sourceIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(devicePixelRatio: 2.0),
       'assets/imgs/icons8-user.png'
@@ -62,86 +55,115 @@ class _TheMapPageState extends State<TheMapPage> {
     destinationIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(devicePixelRatio: 2.0),
       'assets/imgs/icons8-truck.png'
+      //'assets/imgs/icons8-user.png'
     );
   }
-
-  // set sources & destination locations 
-  void setInitialLocation() {
-    currentLocation = LatLng(
-      Source_Location.latitude, 
-      Source_Location.longitude
-    );
-
-
-
-    destinationLocation = LatLng(
-      Dest_Location.latitude, 
-      Dest_Location.longitude
-    );
-  }
-
-  // get user location dynamicaly
-
-  /*void _getUserLocation() async {
-        var position = await Geolocator
-            .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-            //.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    
-        setState(() {
-          currentPostion = LatLng(position.latitude, position.longitude);
-        });
-  }*/
-
-
+  
   @override
   Widget build(BuildContext context) {
-
-    CameraPosition initialCameraPosition = const CameraPosition(
-      zoom: CAMERA_ZOOM,
-      tilt: CAMERA_TILT,
-      bearing: CAMERA_BEARING,
-      target: Source_Location
-    );
-
-
-
     return Scaffold(
       body: Container(
-        child: GoogleMap(
-          myLocationEnabled: true,
-          compassEnabled: false,
-          tiltGesturesEnabled: false,
-          markers: _markers,
-          mapType: MapType.normal,
-          initialCameraPosition: initialCameraPosition,
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
+        child: Stack(children: <Widget>[
+          Container(
+            child: GoogleMap(
+              zoomGesturesEnabled: true, //enable Zoom in, out on map
+              initialCameraPosition: const CameraPosition(          //innital position in map
+                target: showLocation, //initial position
+                zoom: 15.0, //initial zoom level
+              ),
+              markers: _markers, //markers to show on map
+              mapType: MapType.normal,
+              onMapCreated: (GoogleMapController controller) { //method called when map is created
+                
+                _controller.complete(controller);
 
-            // enable markers on map 
+                getmarkers();
+                
+              },
 
-            showPinsOnMap();
-          },
-        )
+            ),
+
+          ),
+          
+          TruckLists(),
+          const Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,             
+            child: CategoryBottomBar(),
+          )
+          
+
+        ]),
+        
       ),
+      // bottomSheet:  const SizedBox(
+      //   height: 80, 
+      //   child: TruckLists()
+      // ),
     );
   }
 
-  void showPinsOnMap(){
+  Set<Marker> getmarkers() { //markers to place on map
     setState(() {
-
-      _markers.add(Marker(
+      _markers.add(Marker( //add first marker
         markerId: MarkerId('sourcePin'),
-        position: currentLocation,
-        icon: sourceIcon,
+        position: showLocation, //position of marker
+        infoWindow: InfoWindow( //popup info 
+          title: 'user ',
+          snippet: 'My Custom Subtitle',
+        ),
+        icon: sourceIcon, //Icon for Marker
       ));
 
-      _markers.add(Marker(
-        markerId: MarkerId('destinationPin'),
-        position: destinationLocation,
-        icon: destinationIcon,
+      _markers.add(Marker( //add second marker
+        markerId: MarkerId('destinationPin1'),
+        position: LatLng(48.865766346914446, 2.4633482593284466), //position of marker
+        infoWindow: InfoWindow( //popup info 
+          title: 'truck 2 ',
+          snippet: 'My Custom Subtitle',
+        ),
+        icon: destinationIcon, //Icon for Marker
       ));
-      
+
+      _markers.add(Marker( //add third marker
+        markerId: MarkerId('destinationPin2'),
+        position: LatLng(48.868566346914448, 2.4633482593284468), //position of marker
+        infoWindow: InfoWindow( //popup info 
+          title: 'truck 3 ',
+          snippet: 'My Custom Subtitle',
+        ),
+        icon: destinationIcon, //Icon for Marker
+      ));
+
+      _markers.add(Marker( //add third marker
+        markerId: MarkerId('destinationPin3'),
+        position: LatLng(48.86752697213314, 2.4640869207964764), //position of marker
+        infoWindow: InfoWindow( //popup info 
+          title: 'truck 4 ',
+          snippet: 'My Custom Subtitle',
+        ),
+        icon: destinationIcon, //Icon for Marker
+      ));
+
+      _markers.add(Marker( //add third marker
+        markerId: MarkerId('destinationPin4'),
+        position: LatLng(48.86902697213314, 2.4675869207964768), //position of marker
+        infoWindow: InfoWindow( //popup info 
+          title: 'truck 5 ',
+          snippet: 'My Custom Subtitle',
+        ),
+        icon: destinationIcon, //Icon for Marker
+      ));
+
+       //add more markers here 
     });
-    
+
+    return _markers;
   }
 }
+
+
+// ignore: use_function_type_syntax_for_parameters
+
+

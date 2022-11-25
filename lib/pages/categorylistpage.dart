@@ -16,6 +16,7 @@ import '../widgets/categorycart.dart';
 
 
 class CategoryListPage extends StatelessWidget {
+  
   CategoryListPage({Key? key}) : super(key: key);
 
   List<Category> categories = Utils.getMockedCategories();
@@ -35,51 +36,67 @@ class CategoryListPage extends StatelessWidget {
         elevation: 0.0,
         iconTheme: IconThemeData(color: AppColors.MAIN_COLOR),
       ),
-      body:  Container(
-        child : Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children:[
-                Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 10),
-                  child: Text('Faite votres choix:',
-                  textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
+      body: Container(
+        margin: EdgeInsets.symmetric(vertical: 30.0),
+        height: 200,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: categories.length,
+          itemBuilder: (BuildContext ctx, int index){
+            return CategoryCart(
+              category: categories[index],
+              onCartClick: () { 
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(
+                    builder: (context) => TheMapPage()
+                  )
+                );
+              },
+            );
+            // return Container(
+            //   //child: Text(categories[index].name),
+            //   margin: EdgeInsets.all(10),
+            //   //height: 150,
+            //   child: Stack(
+            //     children: [
+            //       ClipRRect(
+            //         borderRadius: BorderRadius.circular(15), 
+            //         child: Image.asset('assets/imgs/${categories[index].imgName}.jpg',
+            //           fit: BoxFit.cover, 
+            //         )
+            //       ),
+            //       Positioned(
+            //         bottom: 0,
+            //         left: 0,
+            //         right: 0,
+            //         child: Container(
+            //           height: 120,
+            //           decoration: BoxDecoration(
+            //             borderRadius: BorderRadius.only(
+            //               bottomLeft: Radius.circular(20),
+            //               bottomRight: Radius.circular(20)
+            //             ),
+            //             gradient: LinearGradient(
+            //               begin: Alignment.bottomCenter,
+            //               end: Alignment.topCenter,
+            //               colors: [
+            //                 Colors.black.withOpacity(0.7),
+            //                 Colors.transparent
+            //               ]
+            //             )
+            //           ),
+            //         )
 
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: categories.length,
-                    itemBuilder: (BuildContext ctx, int index) {
-                      // call categoryCard widget to display list 
-                      return CategoryCart(
-                        category: categories[index],
-                        onCartClick: () { 
-                          Navigator.push(
-                            context, 
-                            MaterialPageRoute(
-                              builder: (context) => TheMapPage()
-                            )
-                          );
-                        },
-                      );
- 
-                    },
-                  ),
-                )
-              ],
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,             
-              child: CategoryBottomBar(),
-            )
-          ],
-        )
-      ),
+            //       ),
+  
+            //     ],
+            //   ),
+            // );
+          },
+        ),
+      ) 
+
       
     );
   }
