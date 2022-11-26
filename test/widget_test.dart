@@ -7,13 +7,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:foodtruckapp/pages/myapp.dart';
+import 'package:foodtruckapp/pages/welcomepage.dart';
 
-import 'package:foodtruckapp/main.dart';
+//import 'package:foodtruckapp/main.dart';
 
 void main() {
+  int duration = 0;
+  Widget goToPage = WelcomePage();
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp(goToPage: goToPage, duration: duration,));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
