@@ -105,8 +105,17 @@ class CategoryCart extends StatelessWidget {
                       Icons.favorite_border,
                       size: 24.0,
                     ),
+                    Text('',
+                      style: TextStyle(height: 3.6),
+                    ),
+                    Icon(
+                      Icons.favorite,
+                      size: 24.0,
+                    ),
+                    
                   ],
                 ),
+                
                 // child: Icon(
                 //   Icons.favorite_border ,
                 //   size: 24.0,
@@ -121,6 +130,23 @@ class CategoryCart extends StatelessWidget {
                 //   iconName: category.icon, size: 2,
                 // ),
               ),
+              // SizedBox(width: 10,),
+              // Container(
+              //   height: 122.0,
+              //   padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+              //   child: Column(
+              //     children: const [
+              //       Text('10K',
+              //         style: TextStyle(
+              //           color: Colors.black,
+              //           fontSize: 18.0,
+              //           fontWeight: FontWeight.bold,
+              //           height: 5.689
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // ),
               // Row(
               //   crossAxisAlignment: CrossAxisAlignment.start,
               //   mainAxisAlignment: MainAxisAlignment.start,
